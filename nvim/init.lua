@@ -42,6 +42,7 @@ require('nvim-treesitter.configs').setup {
 local lspconfig = require('lspconfig')
 lspconfig.rust_analyzer.setup {}
 lspconfig.tsserver.setup {}
+lspconfig.pyright.setup {}
 
 local rt = require("rust-tools")
 rt.setup({
