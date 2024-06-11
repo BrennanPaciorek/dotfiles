@@ -14,6 +14,11 @@ local plugins = {
 	"hrsh7th/cmp-vsnip",
 	"hrsh7th/nvim-cmp",
 	"hrsh7th/vim-vsnip",
+	{
+		'nvim-telescope/telescope.nvim', 
+		tag = '0.1.8',
+		dependencies = { 'nvim-lua/plenary.nvim' },
+	},
 }
 
 local lazy_opts = {}
@@ -23,6 +28,7 @@ require("mason").setup()
 require("mason-lspconfig").setup()
 
 require("opts")
+require("telescope-config")
 
 require('nvim-treesitter.configs').setup {
   ensure_installed = { "lua", "rust", "toml", "typescript" },

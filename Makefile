@@ -1,8 +1,9 @@
-all: neovim git-config
+all: neovim-config git-config
 
-neovim:
-	mkdir -p "${HOME}/.config/nvim"
-	cp -r nvim/* "${HOME}/.config/nvim/"
+neovim-config:
+	mkdir -p "${HOME}/.config/nvim/lua"
+	cp "neovim/init.lua" "${HOME}/.config/nvim/init.lua"
+	rsync -a --delete "neovim/lua/" "${HOME}/.config/nvim/lua/"
 
 git-config:
 	mkdir -p "${HOME}/.config/"
