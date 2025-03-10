@@ -1,7 +1,9 @@
 all: neovim-config git-config
-.PHONY: build-bootc-container build-bootc-image
+.PHONY: build-bootc-container build-bootc-image test-bootc-image
 
-BOOTC_IMAGE_NAME ?= localhost/bpaciore/fedora-bootc-workstation:latest
+BOOTC_IMAGE_NAME ?= localhost/bpaciore/fedora-bootc-workstation
+IMAGE_TARGET ?= base
+QEMU_EXECUTABLE ?= qemu-system-x86_64
 
 neovim-config:
 	mkdir -p "${HOME}/.config/nvim/lua"
@@ -15,7 +17,7 @@ git-config:
 	git config --global init.templateDir "${HOME}/.config/git-template"
 
 build-bootc-container:
-	podman build -t ${BOOTC_IMAGE_NAME} .
+	podman build -t ${BOOTC_IMAGE_NAME}:${IMAGE_TARGET} --target ${IMAGE_TARGET} .
 
 build-bootc-image: build-bootc-container
 	podman run \
@@ -32,19 +34,15 @@ build-bootc-image: build-bootc-container
 	    --type qcow2 \
 	    --use-librepo=True \
 	    --rootfs=btrfs \
-	    ${BOOTC_IMAGE_NAME}
-
-build-bootc-image-using-sudo: build-bootc-image
-	# Update permissions to not be root if this was run as root
-	chown -R ${USER}:${USER} output/*
+	    ${BOOTC_IMAGE_NAME}:${IMAGE_TARGET}
 
 # Requires: qemu-system-x86_64
 test-bootc-image:
-	qemu-system-x86_64 \
+	${QEMU_EXECUTABLE} \
 	    -M accel=kvm \
 	    -cpu host \
-	    -display gtk,gl=on \
-	    -device virtio-gpu-rutabaga,cross-domain=on,hostmem=4G,wayland-socket-path=/tmp/nonstandard/mock_wayland.sock,wsi=headless \
+	    -vga virtio \
+	    -device virtio-gpu-rutabaga,cross-domain=on,hostmem=8G,wayland-socket-path=/tmp/nonstandard/mock_wayland.sock,wsi=headless \
 	    -audio driver=pipewire,model=virtio \
 	    -smp 4 \
 	    -m 16384 \
