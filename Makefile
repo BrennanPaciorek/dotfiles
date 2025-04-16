@@ -1,5 +1,5 @@
 all: neovim-config git-config
-.PHONY: build-bootc-container build-bootc-image test-bootc-image
+.PHONY: build-bootc-container build-bootc-image test-bootc-image bash-rc-d bash
 
 BOOTC_IMAGE_NAME ?= localhost/bpaciore/fedora-bootc-workstation
 IMAGE_TARGET ?= base
@@ -15,6 +15,12 @@ git-config:
 	rm -rf "${HOME}/.config/git-template"
 	cp -r git/git-template/ "${HOME}/.config/git-template"
 	git config --global init.templateDir "${HOME}/.config/git-template"
+
+bash-rc-d:
+	mkdir -p "${HOME}/.bashrc.d"
+
+bash: bash-rc-d
+	cp ./bash/bashrc.d/* "${HOME}/.bashrc.d/"
 
 build-bootc-container:
 	podman build -t ${BOOTC_IMAGE_NAME}:${IMAGE_TARGET} --target ${IMAGE_TARGET} .
