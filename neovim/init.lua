@@ -49,6 +49,7 @@ local lspconfig = require('lspconfig')
 lspconfig.rust_analyzer.setup {}
 lspconfig.tsserver.setup {}
 lspconfig.pyright.setup {}
+lspconfig.jdtls.setup {}
 
 local rt = require("rust-tools")
 rt.setup({
