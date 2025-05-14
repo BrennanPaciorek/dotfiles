@@ -4,8 +4,6 @@ local plugins = {
 	"nvim-treesitter/nvim-treesitter",
 	"neovim/nvim-lspconfig",
 	"williamboman/mason.nvim",
-	"williamboman/mason-lspconfig.nvim",
-	"simrat39/rust-tools.nvim",
 	"hrsh7th/cmp-buffer",
 	"hrsh7th/cmp-nvim-lsp",
 	"hrsh7th/cmp-nvim-lsp-signature-help",
@@ -25,7 +23,6 @@ local lazy_opts = {}
 
 require("lazy").setup(plugins, lazy_opts)
 require("mason").setup()
-require("mason-lspconfig").setup()
 
 require("opts")
 require("telescope-config")
@@ -45,23 +42,48 @@ require('nvim-treesitter.configs').setup {
   }
 }
 
-local lspconfig = require('lspconfig')
-lspconfig.rust_analyzer.setup {}
-lspconfig.tsserver.setup {}
-lspconfig.pyright.setup {}
-lspconfig.jdtls.setup {}
-
-local rt = require("rust-tools")
-rt.setup({
-  server = {
-    on_attach = function(_, bufnr)
-      -- Hover actions
-      vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
-      -- Code action groups
-      vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
-    end,
+-- Configure rust_analyzer
+vim.lsp.config('rust_analyzer', {
+  -- Server-specific settings. See `:help lsp-quickstart`
+  settings = {
+    ['rust-analyzer'] = {},
   },
 })
+
+-- Configure tsserver
+vim.lsp.config('tsserver', {
+  -- Server-specific settings. See `:help lsp-quickstart`
+  settings = {
+    ['tsserver'] = {},
+  },
+})
+
+-- Configure pyright
+vim.lsp.config('pyright', {
+  -- Server-specific settings. See `:help lsp-quickstart`
+  settings = {
+    ['pyright'] = {},
+  },
+})
+
+-- Configure jdtls
+vim.lsp.config('jdtls', {
+  -- Server-specific settings. See `:help lsp-quickstart`
+  init_options = {
+    extendedClientCapabilities = {
+      classFileContentsSupport = true,
+    },
+  },
+  settings = {
+    ['jdtls'] = {},
+  },
+})
+
+-- Enable LSP
+vim.lsp.enable('rust_analyzer')
+vim.lsp.enable('tsserver')
+vim.lsp.enable('pyright')
+vim.lsp.enable('jdtls')
 
 -- Completion Plugin Setup
 local cmp = require'cmp'
