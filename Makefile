@@ -32,7 +32,6 @@ build-bootc-image: build-bootc-container
 	    --privileged \
 	    --pull=newer \
 	    --network=none \
-	    --security-opt label=type:unconfined_t \
 	    -v ./config.toml:/config.toml:ro \
 	    -v ./output:/output \
 	    -v /var/lib/containers/storage:/var/lib/containers/storage \

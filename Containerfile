@@ -1,4 +1,4 @@
-FROM quay.io/fedora/fedora-bootc:41 as base
+FROM quay.io/fedora/fedora-bootc:42 as base
 
 # We're inheriting from a pretty bare-bones server image, so we're gonna want to layer some batteries over it
 # Problems: edac_mce_amd kernel module is not running on guest-os, causing mcelog to start (need to figure out what provides this, and what conditions require it to be installed).
@@ -11,6 +11,10 @@ FROM quay.io/fedora/fedora-bootc:41 as base
 # 	fonts: fonts
 #	swaywm swaywm-extended: Stuff for sway. This probably also gets rofi grimshot desktop-backgrounds-compat, but I figure I'll keep those there just in case
 #	networkmanager-submodules: I like having stuff for NM just in case
+# TODOs
+#  - install manpages
+#  - get updates in a working order
+#  - Cursor problems in vm (cursor not represent actual cursor)
 RUN dnf install -y \
     @base-graphical @hardware-support @guest-agents @standard @multimedia \
     @fonts \
