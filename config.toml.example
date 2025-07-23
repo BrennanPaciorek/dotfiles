@@ -2,3 +2,17 @@
 name = "username"
 password = "password"
 groups = ["wheel"]
+
+# Cannot configure both user and kickstart contents, uncomment this and comment out [[customizations.user]] if building to anaconda-iso
+# To generate unix password hashes with salt: openssl passwd -6
+# [customizations.installer.kickstart]
+# contents = """
+# text --non-interactive
+# zerombr
+# clearpart --all --disklabel=gpt
+# autopart --noswap --type=btrfs --encrypted --passphrase=password
+# network --bootproto=dhcp --device=link --activate --onboot=on
+# user --name=username --password="<password-hash>" --iscrypted --groups=wheel
+# rootpw --password="<password-hash>" --iscrypted
+# lang en_US --addsupport=cs_CZ,de_DE,en_UK
+# """

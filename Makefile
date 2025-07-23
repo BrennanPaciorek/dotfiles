@@ -2,7 +2,8 @@ all: neovim-config git-config
 .PHONY: build-bootc-container build-bootc-image test-bootc-image bash-rc-d bash
 
 BOOTC_IMAGE_NAME ?= localhost/bpaciore/fedora-bootc-workstation
-IMAGE_TARGET ?= base
+IMAGE_TARGET ?= host-os
+IMAGE_TYPE ?= qemu
 QEMU_EXECUTABLE ?= qemu-system-x86_64
 
 neovim-config:
@@ -31,12 +32,11 @@ build-bootc-image: build-bootc-container
 	    -it \
 	    --privileged \
 	    --pull=newer \
-	    --network=none \
 	    -v ./config.toml:/config.toml:ro \
 	    -v ./output:/output \
 	    -v /var/lib/containers/storage:/var/lib/containers/storage \
 	    quay.io/centos-bootc/bootc-image-builder:latest \
-	    --type qcow2 \
+	    --type "${IMAGE_TYPE}" \
 	    --use-librepo=True \
 	    --rootfs=btrfs \
 	    ${BOOTC_IMAGE_NAME}:${IMAGE_TARGET}
