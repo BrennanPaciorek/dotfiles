@@ -20,7 +20,7 @@ RUN dnf install -y \
     @fonts \
     @swaywm @swaywm-extended \
     @networkmanager-submodules \
-    screenfetch tmux neovim ansible flatpak git
+    screenfetch tmux neovim ansible flatpak git man-db
 
 # Add flathub to remotes
 RUN flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo

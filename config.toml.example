@@ -15,4 +15,5 @@ groups = ["wheel"]
 # user --name=username --password="<password-hash>" --iscrypted --groups=wheel
 # rootpw --password="<password-hash>" --iscrypted
 # lang en_US --addsupport=cs_CZ,de_DE,en_UK
+# timezone US/Eastern
 # """
