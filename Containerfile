@@ -29,8 +29,6 @@ RUN flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flath
 COPY ./sway/config /etc/sway/config
 COPY ./sway/config.d/*.conf /etc/sway/config.d/
 
-RUN systemctl set-default graphical.target
-
 FROM base as host-os
 
 RUN dnf install -y @virtualization

@@ -1,7 +1,7 @@
 all: neovim-config git-config
 .PHONY: build-bootc-container build-bootc-image test-bootc-image bash-rc-d bash
 
-BOOTC_IMAGE_NAME ?= localhost/bpaciore/fedora-bootc-workstation
+BOOTC_IMAGE_NAME ?= quay.io/brenp5744/fedora-bootc-desktop
 IMAGE_TARGET ?= host-os
 IMAGE_TYPE ?= qemu
 QEMU_EXECUTABLE ?= qemu-system-x86_64
