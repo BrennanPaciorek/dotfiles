@@ -20,11 +20,15 @@ RUN dnf install -y \
     @fonts \
     @swaywm @swaywm-extended \
     @networkmanager-submodules \
+    plymouth \
     screenfetch tmux neovim ansible flatpak git man-db
 
 # Add flathub to remotes
 RUN flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
+# Add Dracut config, rebuild initramfs
+COPY ./bootc/dracut/99-custom-modules.conf /usr/lib/dracut/dracut.conf.d/99-custom-modules.conf
+RUN set -x; kver=$(cd /usr/lib/modules && echo *); dracut -vf /usr/lib/modules/$kver/initramfs.img $kver
 # Configure sway, hopefully not interfering with packaged sway stuff
 COPY ./sway/config /etc/sway/config
 COPY ./sway/config.d/*.conf /etc/sway/config.d/
