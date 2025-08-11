@@ -24,12 +24,12 @@ jobs:
 
     - name: Build bootc image
       env:
-        BOOTC_IMAGE_NAME: ${{ vars.CONTAINER_REPOSITORY_USERNAME }}
+        BOOTC_IMAGE_NAME: ${{ vars.BOOTC_IMAGE_NAME }}
         IMAGE_TARGET: ${{ vars.BOOTC_IMAGE_TARGET }}
       run: make build-bootc-container
 
     - name: Push bootc image
       env:
-        BOOTC_IMAGE_NAME: ${{ vars.CONTAINER_REPOSITORY_USERNAME }}
+        BOOTC_IMAGE_NAME: ${{ vars.BOOTC_IMAGE_NAME }}
         IMAGE_TARGET: ${{ vars.BOOTC_IMAGE_TARGET }}
       run: podman push "${BOOTC_IMAGE_NAME}:${IMAGE_TARGET}"
