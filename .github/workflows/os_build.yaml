@@ -12,13 +12,6 @@ jobs:
     - name: Update and install podman
       run: sudo apt-get update && sudo apt-get install podman make
 
-    - name: Login to Quay
-      env:
-        CONTAINER_REPOSITORY: ${{ vars.CONTAINER_REPOSITORY }}
-        CONTAINER_REPOSITORY_USERNAME: ${{ vars.CONTAINER_REPOSITORY_USERNAME }}
-        QUAY_IO_PASSWORD: ${{ secrets.QUAY_IO_PASSWORD }}
-      run: podman login -u "$CONTAINER_REPOSITORY_USERNAME" --password "$QUAY_IO_PASSWORD" "$CONTAINER_REPOSITORY"
-
     - name: checkout repo
       uses: actions/checkout@main
 
@@ -28,8 +21,14 @@ jobs:
         IMAGE_TARGET: ${{ vars.BOOTC_IMAGE_TARGET }}
       run: make build-bootc-container
 
-    - name: Push bootc image
+    - name: Login and Push bootc image
       env:
         BOOTC_IMAGE_NAME: ${{ vars.CONTAINER_REPOSITORY_USERNAME }}
         IMAGE_TARGET: ${{ vars.BOOTC_IMAGE_TARGET }}
-      run: podman push "${BOOTC_IMAGE_NAME}:${IMAGE_TARGET}"
+        CONTAINER_REPOSITORY: ${{ vars.CONTAINER_REPOSITORY }}
+        CONTAINER_REPOSITORY_USERNAME: ${{ vars.CONTAINER_REPOSITORY_USERNAME }}
+        QUAY_IO_PASSWORD: ${{ secrets.QUAY_IO_PASSWORD }}
+      run: |
+        podman login -u "$CONTAINER_REPOSITORY_USERNAME" -p "$QUAY_IO_PASSWORD" "$CONTAINER_REPOSITORY"
+        podman push "${BOOTC_IMAGE_NAME}:${IMAGE_TARGET}"
+
