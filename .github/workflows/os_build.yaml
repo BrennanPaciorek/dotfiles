@@ -19,6 +19,9 @@ jobs:
         QUAY_IO_PASSWORD: ${{ secrets.QUAY_IO_PASSWORD }}
       run: podman login -u "$CONTAINER_REPOSITORY_USERNAME" --password "$QUAY_IO_PASSWORD" "$CONTAINER_REPOSITORY"
 
+    - name: checkout repo
+      uses: actions/checkout@main
+
     - name: Build bootc image
       env:
         BOOTC_IMAGE_NAME: ${{ vars.CONTAINER_REPOSITORY_USERNAME }}

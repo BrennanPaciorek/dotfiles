@@ -24,7 +24,7 @@ bash: bash-rc-d
 	cp ./bash/bashrc.d/* "${HOME}/.bashrc.d/"
 
 build-bootc-container:
-	podman build -t ${BOOTC_IMAGE_NAME}:${IMAGE_TARGET} --target ${IMAGE_TARGET} .
+	podman build -t "${BOOTC_IMAGE_NAME}:${IMAGE_TARGET}" --target ${IMAGE_TARGET} .
 
 build-bootc-image: build-bootc-container
 	podman run \
