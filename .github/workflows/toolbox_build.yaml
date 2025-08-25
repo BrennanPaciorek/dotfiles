@@ -22,13 +22,13 @@ jobs:
     - name: checkout repo
       uses: actions/checkout@main
 
-    - name: Build bootc image
+    - name: Build toolbox
       env:
         TOOLBOX_IMAGE_NAME: ${{ vars.TOOLBOX_IMAGE_NAME }}
         TOOLBOX_IMAGE_TAG: ${{ vars.TOOLBOX_IMAGE_TAG }}
       run: make build-toolbox-container
 
-    - name: Push bootc image
+    - name: Push toolbox
       env:
         TOOLBOX_IMAGE_NAME: ${{ vars.TOOLBOX_IMAGE_NAME }}
         TOOLBOX_IMAGE_TAG: ${{ vars.TOOLBOX_IMAGE_TAG }}
