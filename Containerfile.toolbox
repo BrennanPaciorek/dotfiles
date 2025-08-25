@@ -1,0 +1,4 @@
+FROM registry.fedoraproject.org/fedora-toolbox:42
+
+# Install some packages that I might reasonably want
+RUN dnf install -y neovim podman git

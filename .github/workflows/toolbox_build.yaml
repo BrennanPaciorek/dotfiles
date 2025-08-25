@@ -1,4 +1,4 @@
-name: Build and push OS Containerfile
+name: Build and push development toolbox
 on:
   push:
     branches:
@@ -24,12 +24,12 @@ jobs:
 
     - name: Build bootc image
       env:
-        BOOTC_IMAGE_NAME: ${{ vars.BOOTC_IMAGE_NAME }}
-        BOOTC_IMAGE_TARGET: ${{ vars.BOOTC_IMAGE_TARGET }}
-      run: make build-bootc-container
+        TOOLBOX_IMAGE_NAME: ${{ vars.TOOLBOX_IMAGE_NAME }}
+        TOOLBOX_IMAGE_TAG: ${{ vars.TOOLBOX_IMAGE_TAG }}
+      run: make build-toolbox-container
 
     - name: Push bootc image
       env:
-        BOOTC_IMAGE_NAME: ${{ vars.BOOTC_IMAGE_NAME }}
-        BOOTC_IMAGE_TARGET: ${{ vars.BOOTC_IMAGE_TARGET }}
-      run: podman push "${BOOTC_IMAGE_NAME}:${BOOTC_IMAGE_TARGET}"
+        TOOLBOX_IMAGE_NAME: ${{ vars.TOOLBOX_IMAGE_NAME }}
+        TOOLBOX_IMAGE_TAG: ${{ vars.TOOLBOX_IMAGE_TAG }}
+      run: podman push "${TOOLBOX_IMAGE_NAME}:${TOOLBOX_IMAGE_TAG}"
