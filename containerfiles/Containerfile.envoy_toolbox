@@ -1,0 +1,31 @@
+FROM quay.io/brenp5744/dev-toolbox:latest
+
+RUN dnf install -y \
+    aspell-en \
+    libatomic \
+    libstdc++ \
+    libstdc++-static \
+    libtool \
+    lld \
+    patch \
+    python3-pip \
+    libcxxabi \
+    libcxx \
+    libcxxabi-devel \
+    libcxx-devel \
+    libcxx-static \
+    libcxxabi-static \
+    llvm18 \
+    llvm18-libs \
+    llvm18-test \
+    llvm18-googletest \
+    llvm18-static \
+    llvm18-devel \
+    clang18 \
+    clang18-libs \
+    clang18-devel \
+    clang18-resource-filesystem \
+    clang18-tools-extra \
+    clang18-tools-extra-devel
+
+RUN curl -Lo /usr/local/bin/bazel https://github.com/bazelbuild/bazelisk/releases/latest/download/bazelisk-linux-amd64 && chmod +x /usr/local/bin/bazel
