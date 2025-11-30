@@ -1,3 +1,0 @@
-#!/bin/bash
-dir="$(git rev-parse --git-dir)"
-$dir/hooks/ctags >/dev/null 2>&1 &
