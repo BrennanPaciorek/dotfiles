@@ -1,4 +1,4 @@
-FROM quay.io/fedora/fedora-bootc:42 as base
+FROM quay.io/fedora/fedora-bootc:43 as base
 
 # We're inheriting from a pretty bare-bones server image, so we're gonna want to layer some batteries over it
 # Problems: edac_mce_amd kernel module is not running on guest-os, causing mcelog to start (need to figure out what provides this, and what conditions require it to be installed).
@@ -21,7 +21,7 @@ RUN dnf install -y \
     @swaywm @swaywm-extended \
     @networkmanager-submodules \
     plymouth \
-    screenfetch tmux neovim ansible flatpak git man-db
+    screenfetch tmux neovim ansible flatpak git man-db fish
 
 # Add flathub to remotes
 RUN flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
