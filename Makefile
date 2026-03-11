@@ -19,6 +19,12 @@ bash-rc-d:
 bash: bash-rc-d
 	cp ./bash/bashrc.d/* "${HOME}/.bashrc.d/"
 
+.PHONY: install-fish-config
+install-fish-config:
+	mkdir -p ${HOME}/.config/fish/conf.d/
+	rsync -a "fish/conf.d/" "${HOME}/.config/fish/conf.d/"
+
+
 build-toolbox-container:
 	podman build -t ${TOOLBOX_IMAGE_NAME}:${TOOLBOX_IMAGE_TAG} -f Containerfile.toolbox .
 
