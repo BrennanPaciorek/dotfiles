@@ -3,7 +3,7 @@ all: neovim-config git-config
 
 BOOTC_IMAGE_NAME ?= quay.io/brenp5744/fedora-bootc-desktop
 BOOTC_IMAGE_TARGET ?= host-os
-BOOTC_IMAGE_TYPE ?= qemu
+BOOTC_IMAGE_TYPE ?= qcow2
 TOOLBOX_IMAGE_NAME ?= quay.io/brenp5744/dev-toolbox
 TOOLBOX_IMAGE_TAG ?= latest
 QEMU_EXECUTABLE ?= qemu-system-x86_64
@@ -41,12 +41,14 @@ build-bootc-image: build-bootc-container
 	    ${BOOTC_IMAGE_NAME}:${BOOTC_IMAGE_TARGET}
 
 # Requires: qemu-system-x86_64
+# -device virtio-gpu-rutabaga,cross-domain=on,hostmem=8G,wayland-socket-path=/tmp/nonstandard/mock_wayland.sock,wsi=headless \
+.PHONY: test-bootc-image
 test-bootc-image:
 	${QEMU_EXECUTABLE} \
 	    -M accel=kvm \
 	    -cpu host \
 	    -vga virtio \
-	    -device virtio-gpu-rutabaga,cross-domain=on,hostmem=8G,wayland-socket-path=/tmp/nonstandard/mock_wayland.sock,wsi=headless \
+	    -device virtio-gpu \
 	    -audio driver=pipewire,model=virtio \
 	    -smp 4 \
 	    -m 16384 \

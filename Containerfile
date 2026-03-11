@@ -18,7 +18,7 @@ FROM quay.io/fedora/fedora-bootc:43 as base
 RUN dnf install -y \
     @base-graphical @hardware-support @guest-agents @standard @multimedia \
     @fonts \
-    @swaywm @swaywm-extended \
+    @cosmic-desktop \
     @networkmanager-submodules \
     plymouth \
     screenfetch tmux neovim ansible flatpak git man-db fish
@@ -29,9 +29,6 @@ RUN flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flath
 # Add Dracut config, rebuild initramfs
 COPY ./bootc/dracut/99-custom-modules.conf /usr/lib/dracut/dracut.conf.d/99-custom-modules.conf
 RUN set -x; kver=$(cd /usr/lib/modules && echo *); dracut -vf /usr/lib/modules/$kver/initramfs.img $kver
-# Configure sway, hopefully not interfering with packaged sway stuff
-COPY ./sway/config /etc/sway/config
-COPY ./sway/config.d/*.conf /etc/sway/config.d/
 
 FROM base as host-os
 
