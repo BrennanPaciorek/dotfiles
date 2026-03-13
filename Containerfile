@@ -21,6 +21,7 @@ RUN dnf install -y \
     @cosmic-desktop \
     @networkmanager-submodules \
     plymouth \
+    glibc-all-langpacks \
     screenfetch tmux neovim ansible flatpak git man-db fish
 
 # Add flathub to remotes
